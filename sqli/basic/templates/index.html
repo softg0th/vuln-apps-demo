@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SQL Injection</title>
+</head>
+<body>
+    <p><img src="sql.png" width="250" height="200"></p>
+
+    <form id="myForm" action="/select_data" method="POST">
+      <label for="name">Введите предмет:</label>
+      <input
+        type="text"
+        id="name"
+        name="user_prompt"
+        required
+        maxlength="100"
+        size="50"
+      >
+      
+      <label for="queryType">Тип запроса:</label>
+      <select name="select_type" id="queryType">
+        <option value="raw" selected>Обычный</option>
+        <option value="parametrized">Параметризованный</option>
+        <option value="orm">ORM</option>
+      </select>
+      
+      <button type="submit" id="input">Найти</button>
+  </form>
+    
+</body>
+</html>
