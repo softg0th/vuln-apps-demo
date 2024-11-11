@@ -49,6 +49,7 @@ def select_orm_values(data):
     try:
         with Session(autoflush=False, bind=engine) as session:
             users = session.query(User).filter(User.username == data).all()
-        return users
+            result = [{'id': user.id, 'username': user.username, 'is_admin': user.is_admin} for user in users]
+        return result
     except Exception as ex:
         return ex
