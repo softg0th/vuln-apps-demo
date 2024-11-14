@@ -5,8 +5,6 @@
     <title>SQL Injection</title>
 </head>
 <body>
-    <p><img src="sql.png" width="250" height="200"></p>
-
     <form id="myForm" action="/select_data" method="POST">
       <label for="name">Введите предмет:</label>
       <input
@@ -14,7 +12,7 @@
         id="name"
         name="user_prompt"
         required
-        maxlength="100"
+        maxlength="10000000000000000"
         size="50"
       >
       

