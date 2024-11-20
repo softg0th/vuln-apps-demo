@@ -20,7 +20,7 @@ def select_data_access(data, access_type):
 def select_raw_values(data):
     connection = sqlite3.connect('userdb.db', check_same_thread=False)
     cursor = connection.cursor()
-    sql = f"SELECT id, username, is_admin FROM users WHERE username='{data}'"  
+    sql = f"SELECT id, username, is_admin FROM users WHERE username LIKE '{data}'"  
     #   username' OR '1'='1
     # число пользаков: ' UNION SELECT NULL,NULL,NULL-- (можно перебирать)
     # union: ' UNION SELECT username, cardUserName, cvc FROM cards --
@@ -28,7 +28,6 @@ def select_raw_values(data):
     try:
         cursor.execute(sql)
         results = cursor.fetchall()
-        print(results)
         return results
     except Exception as ex:
         raise ex
@@ -37,7 +36,7 @@ def select_raw_values(data):
 def select_parametrized_values(data):
     connection = sqlite3.connect('userdb.db', check_same_thread=False)
     cursor = connection.cursor()
-    sql = "SELECT id, username, is_admin FROM users WHERE username=?"
+    sql = "SELECT id, username, is_admin FROM users WHERE username LIKE ?"
     try:
         cursor.execute(sql, (data,))
         results = cursor.fetchall()
@@ -51,8 +50,8 @@ def select_orm_values(data):
     Session = sessionmaker(autoflush=False, bind=engine)
     try:
         with Session(autoflush=False, bind=engine) as session:
-            users = session.query(User).filter(User.username == data).all()
-            result = [{'id': user.id, 'username': user.username, 'is_admin': user.is_admin} for user in users]
+            users = session.query(User).filter(User.username.like(data)).all()
+            result = [[user.id,  user.username, user.is_admin] for user in users]
         return result
     except Exception as ex:
         return ex
