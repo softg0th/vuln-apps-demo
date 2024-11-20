@@ -15,5 +15,4 @@ def select_data():
     user_prompt = request.form.get('user_prompt')
     select_type = request.form.get('select_type')
     users = select_data_access(user_prompt, select_type)
-    logging.info(user_prompt, select_type)
-    return render_template('users.html', data=users)
+    return jsonify(users)
