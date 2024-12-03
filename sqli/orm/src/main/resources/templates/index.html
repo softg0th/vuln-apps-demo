@@ -7,55 +7,54 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>Пользователи</h1>
-    
-    <form id="myForm">
-        <label for="name">Введите ппользователя:</label>
-        <input
+<h1>Пользователи</h1>
+
+<form id="myForm">
+    <label for="name">Введите пользователя:</label>
+    <input
             type="text"
             id="name"
             name="user_prompt"
             required
             maxlength="100"
             size="50"
-        >
-        
-        <label for="queryType">Тип запроса:</label>
-        <select name="select_type" id="queryType">
-            <option value="raw" selected>Обычный</option>
-            <option value="parametrized">Параметризованный</option>
-            <option value="orm">ORM</option>
-        </select>
-        
-        <button type="submit">Найти</button>
-    </form>
-    
-    <ul id="user-list">
-    </ul>
-    <script>
-        $(document).ready(function() {
-            $('#myForm').submit(function(event) {
-                event.preventDefault();
-                const formData = {
-                    user_prompt: $('#name').val(),
-                    select_type: $('#queryType').val()
-                };
-                $.ajax({
-                    url: '/select_data',
-                    type: 'POST',
-                    data: formData,
-                    success: function(response) {
-                        $('#user-list').empty();
+    >
+    <button type="submit">Найти</button>
+</form>
+
+<ul id="user-list">
+</ul>
+
+<script>
+    $(document).ready(function() {
+        $('#myForm').on('submit', function(event) {
+            event.preventDefault();
+            const formData = {
+                user_prompt: $('#name').val(),
+                select_type: $('#queryType').val()
+            };
+            $.ajax({
+                url: '/api/select_data',
+                type: 'POST',
+                contentType: 'application/x-www-form-urlencoded',
+                data: formData,
+                success: function(response) {
+                    $('#user-list').empty();
+                    if (Array.isArray(response)) {
                         response.forEach(function(user) {
-                            $('#user-list').append('<li>' + user + '</li>');
+                            const userInfo = `ID: ${user.id}, Username: ${user.username}, Admin: ${user.isAdmin}`;
+                            $('#user-list').append('<li>' + userInfo + '</li>');
                         });
-                    },
-                    error: function() {
-                        alert('Ошибка при выполнении запроса');
+                    } else {
+                        $('#user-list').append('<li>Нет данных для отображения</li>');
                     }
-                });
+                },
+                error: function(xhr, status, error) {
+                    alert('Ошибка: ' + (xhr.responseJSON?.message || 'Не удалось выполнить запрос'));
+                }
             });
         });
-    </script>
+    });
+</script>
 </body>
 </html>
