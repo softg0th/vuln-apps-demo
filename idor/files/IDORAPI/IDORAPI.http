@@ -1,0 +1,14 @@
+@IDORAPI_HostAddress = http://localhost:5287
+
+GET {{IDORAPI_HostAddress}}/api/file/{{fileName}}
+Accept: application/json
+
+
+POST {{IDORAPI_HostAddress}}/api/File
+Content-Type: multipart/form-data
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="example.txt"
+Content-Type: text/plain
+
+###

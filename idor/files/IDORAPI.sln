@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDORAPI", "IDORAPI\IDORAPI.csproj", "{FCE9FFFA-4948-492D-A38F-D46D1C7B602E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FCE9FFFA-4948-492D-A38F-D46D1C7B602E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCE9FFFA-4948-492D-A38F-D46D1C7B602E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCE9FFFA-4948-492D-A38F-D46D1C7B602E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCE9FFFA-4948-492D-A38F-D46D1C7B602E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
