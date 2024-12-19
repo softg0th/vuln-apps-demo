@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+</head>
+<body>
+<h1>Загрузка файла</h1>
+<input type="file" id="fileInput" />
+<button id="uploadButton">Загрузить</button>
+
+<script>
+    const fileInput = document.getElementById('fileInput');
+    const uploadButton = document.getElementById('uploadButton');
+    
+    uploadButton.addEventListener('click', () => {
+        const file = fileInput.files[0];
+
+        if (!file) {
+            alert('Выберите файл для загрузки.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        fetch('api/File', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.message || 'Ошибка загрузки файла'); });
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert(`Файл успешно загружен. Путь: 127.0.0.1:8080/api/File/${data.filePath}`);
+            })
+                .catch(error => {
+                alert(`Ошибка: ${error.message}`);
+            });
+    });
+</script>
+</body>
+</html>

@@ -14,5 +14,11 @@
     <ItemGroup>
       <Folder Include="WebApp\" />
     </ItemGroup>
+	<ItemGroup>
+  <Content Include="templates\index.html">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </Content>
+</ItemGroup>
+
 
 </Project>

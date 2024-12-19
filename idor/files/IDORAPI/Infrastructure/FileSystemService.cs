@@ -8,7 +8,7 @@ namespace IDORAPI.Infrastructure
     public class FileSystemService : IFileSystemService
     {
         string fileDir = "/home/files";
-        int fileNameCounter = 0;
+        int fileNameCounter = 2;
 
         public async Task<string> GetFile(string fileName)
         {
@@ -40,7 +40,7 @@ namespace IDORAPI.Infrastructure
                 await file.CopyToAsync(stream);
             }
 
-            return filePath;
+            return fileName;
         }
     }
 }

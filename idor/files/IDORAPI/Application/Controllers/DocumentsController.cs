@@ -1,21 +1,13 @@
 ﻿
-using System.Reflection.Metadata;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using IDORAPI.Infrastructure.Contracts;
+
 using Microsoft.Extensions.Logging;
-using Microsoft.Net.Http.Headers;
-using Microsoft.AspNetCore.Http;
 
-using IDORAPI.Entities;
-using IDORAPI.Infrastructure.Contracts;
-
-using Microsoft.AspNetCore.Mvc;
-using IDORAPI.Infrastructure.Contracts;
-
-namespace IDORAPI.Controllers
+namespace IDORAPI.Application.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/file")]
     public class FileController : ControllerBase
     {
         private readonly IFileSystemService _fileSystemService;
@@ -35,6 +27,7 @@ namespace IDORAPI.Controllers
             }
             catch (FileNotFoundException)
             {
+                Console.WriteLine("Error: file not found");
                 return NotFound();
             }
         }
@@ -45,7 +38,7 @@ namespace IDORAPI.Controllers
             try
             {
                 string filePath = await _fileSystemService.SaveFile(file);
-                return Ok(new { FilePath = filePath });
+                return Ok(new { filePath });
             }
             catch (ArgumentException ex)
             {
