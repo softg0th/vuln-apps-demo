@@ -1,7 +1,6 @@
 ﻿using IDORAPI.Infrastructure.Contracts;
-using Microsoft.AspNetCore.Http;
-using System.IO;
-using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace IDORAPI.Infrastructure
 {
@@ -32,7 +31,8 @@ namespace IDORAPI.Infrastructure
             }
 
             fileNameCounter++;
-            string fileName = fileNameCounter.ToString() + Path.GetExtension(file.FileName);
+            string fileHashName = await GenerateMD5(fileNameCounter.ToString());
+            string fileName = fileHashName + Path.GetExtension(file.FileName);
             string filePath = $"{fileDir}/{fileName}";
 
             using (var stream = new FileStream(filePath, FileMode.Create))
@@ -41,6 +41,17 @@ namespace IDORAPI.Infrastructure
             }
 
             return fileName;
+        }
+        public async Task<string>  GenerateMD5(string input)
+        {
+            MD5 md5Hasher = MD5.Create();
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
+            StringBuilder sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();
         }
     }
 }

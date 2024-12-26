@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using IDORAPI.Infrastructure.Contracts;
 
-using Microsoft.Extensions.Logging;
 
 namespace IDORAPI.Application.Controllers
 {
