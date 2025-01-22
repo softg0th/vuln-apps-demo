@@ -38,13 +38,30 @@ switch ($endpoint) {
                 exit;
             }
 
-            $sum = 0;
+            $output = [];
             foreach ($requestXml->children() as $child) {
-                $sum += (int)$child;
+                $output[] = (string)$child;
             }
 
             $response = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><response></response>');
-            $response->addAttribute('amount', $sum);
+
+            $sum = 0;
+            foreach ($requestXml->children() as $child) {
+                if (is_numeric((string)$child)) {
+                    $sum += (int)$child;
+                } else {
+                    http_response_code(400);
+                    $userRequestItems = [];
+                    foreach ($output as $item) {
+                        $userRequestItems[] = (string)$item;
+                    }
+                    $serializedValues = serialize($userRequestItems);
+                    $response->addChild('error', "Invalid value: " . htmlspecialchars($serializedValues) . " has non-numerical values");
+                    echo $response->asXML();
+                    exit;
+                }
+            }
+            $response->addChild('sum', $sum);
             echo $response->asXML();
             exit;
         } else {
